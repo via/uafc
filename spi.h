@@ -28,6 +28,9 @@ int spi_write_fifo_empty(struct spi *s);
 int spi_read_fifo_full(struct spi *s);
 int spi_read_fifo_empty(struct spi *s);
 
+void spi_write(struct spi *s, unsigned char);
+unsigned char spi_read(struct spi *s);
+
 
 #define SPIE (1<<7)
 #define SPE  (1<<6)

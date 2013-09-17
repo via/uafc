@@ -120,3 +120,13 @@ int
 spi_read_fifo_empty(struct spi *s) {
   return ((s->_regs->SPSR & RFEMPTY) != 0);
 }
+
+void
+spi_write(struct spi *s, unsigned char c) {
+  s->_regs->SPDR = c;
+}
+
+unsigned char
+spi_read(struct spi *s) {
+  return s->_regs->SPDR;
+}
