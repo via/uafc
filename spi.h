@@ -6,6 +6,7 @@ struct spi_regs {
   unsigned char volatile SPSR;
   unsigned char volatile SPDR;
   unsigned char volatile SPER;
+  unsigned char volatile SPSS;
 };
 
 struct spi {
@@ -27,6 +28,8 @@ int spi_write_fifo_full(struct spi *s);
 int spi_write_fifo_empty(struct spi *s);
 int spi_read_fifo_full(struct spi *s);
 int spi_read_fifo_empty(struct spi *s);
+
+void spi_set_slave_select(struct spi *s, unsigned char sel);
 
 void spi_write(struct spi *s, unsigned char);
 unsigned char spi_read(struct spi *s);

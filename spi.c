@@ -126,6 +126,11 @@ spi_write(struct spi *s, unsigned char c) {
   s->_regs->SPDR = c;
 }
 
+void
+spi_set_slave_select(struct spi *s, unsigned char sel) {
+  s->_regs->SPSS = sel;
+}
+
 unsigned char
 spi_read(struct spi *s) {
   return s->_regs->SPDR;

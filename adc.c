@@ -13,6 +13,9 @@ adc_acquire(struct adc *a, int input) {
   unsigned char adr, in1, in2;
   adr = (input & 0x7) << 3;
 
+  spi_set_slave_select(a->s, 1);
+  spi_disable(a->s);
+  spi_enable(a->s);
   spi_write(a->s, adr);
   spi_write(a->s, 0);
 
@@ -21,6 +24,7 @@ adc_acquire(struct adc *a, int input) {
   
   while(spi_read_fifo_empty(a->s));
   in2 = spi_read(a->s);
+  spi_disable(a->s);
 
   return (in1 << 8) + in2 ;
 

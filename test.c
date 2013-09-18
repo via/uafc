@@ -7,18 +7,15 @@ int
 main() {
   struct spi s;
   struct adc a;
+  int x;
 
   spi_alloc(&s, SPI1); 
-  spi_set_polarity(&s, 0);
-  spi_set_phase(&s, 0);
+  spi_set_polarity(&s, 1);
+  spi_set_phase(&s, 1);
   spi_set_divisor(&s, 1024);
-  spi_enable(&s);
 
   adc_alloc(&a, &s);
-  while (1) {
-    int x;
-    x = adc_acquire(&a, 0);
-  }
-  
+  x = adc_acquire(&a, 0);
+  while (1); 
   return 0;
 }
