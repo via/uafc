@@ -3,7 +3,11 @@
 CC=or1k-elf-gcc
 AS=or1k-elf-as
 LD=or1k-elf-ld
-CFLAGS=-O0 -ggdb -Wall -Werror
+CFLAGS=-O0 -ggdb -Wall 
+
+test: spi.o adc.o test.o
+ 
 
 
-all: spi
+clean:
+	-rm spi.o adc.o
