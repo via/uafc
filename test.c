@@ -37,19 +37,20 @@ void trigger(void) {
       prev = 1;
       lastcount = count;
       count = 0;
+      return;
     }
   } else {
     prev = 0;
   }
   count++;
       
-  or1k_mtspr(SPR_TTMR, SPR_TTMR_IE | SPR_TTMR_RT | 
-	((50000000/100000) & SPR_TTMR_PERIOD));
+  or1k_mtspr(SPR_TTMR, or1k_mfspr(SPR_TTMR) & ~SPR_TTMR_IP);
 
 }
 
 void setuptimer(void) {
-  or1k_timer_init(100000);
+  or1k_timer_init(50000);
+  or1k_mtspr(SPR_TTCR, 0);
   or1k_exception_handler_add(0x05,  trigger);
   or1k_timer_enable();
 }
@@ -69,15 +70,15 @@ main(void) {
   spi_alloc(&s, SPI1); 
   spi_set_polarity(&s, 1);
   spi_set_phase(&s, 1);
-  spi_set_divisor(&s, 32);
+  spi_set_divisor(&s, 16);
 
   adc_alloc(&a, &s);
 
   setuptimer();
   while (1) {
     for (pin = 0; pin < 500000; ++pin);
-    int hz = (200/lastcount);
-    printf("%d\r\n", lastcount);
+    double hz = 50.0/(double)lastcount;
+    printf("%f\r\n", hz);
   }
 
   return 0;
