@@ -6,6 +6,7 @@
 #include "spi.h"
 #include "adc.h"
 #include "gpio.h"
+#include "uafc.h"
 
 #define SPI1 ((void*)0xB1000000 )
 #define GPIO0 ((void*)0x91000000 )
@@ -16,6 +17,14 @@ struct gpio gpio0;
 int prev = 0;
 int count = 0;
 int lastcount = 0;
+
+static struct sensors sensors;
+static struct calculated_values cvals;
+
+struct sensors *
+get_sensors() {
+  return &sensors;
+}
 
 void set_bar(struct gpio *g, unsigned int val) {
 
@@ -76,9 +85,14 @@ main(void) {
 
   setuptimer();
   while (1) {
+    int y;
     for (pin = 0; pin < 500000; ++pin);
     double hz = 50.0/(double)lastcount;
-    printf("%f\r\n", hz);
+    /* unsigned int volatile *ax = (unsigned int volatile *)0x93000004;*/
+    *((unsigned int volatile *)0x93000000) = 0xff;
+    *((unsigned int volatile *)0x93000004) = 49900;
+/*    y = *ax; */
+    printf("%f %d\r\n", hz, y);
   }
 
   return 0;
