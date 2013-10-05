@@ -35,7 +35,7 @@ get_kvafm() {
 
 unsigned int 
 get_rpm() {
-    return countgen_get_counter(&cg0, 0);
+    return countgen_get_counter(&cg0, 2);
 }
 
 double
@@ -45,7 +45,7 @@ get_throttle() {
 
 double
 get_o2() {
-  double afr = adc_acquire(&adc1, 0);
+  double afr = adc_acquire(&adc1, 1);
   return 7.35 + (afr / 5.0) * (22.35 - 7.35);
 }
 
