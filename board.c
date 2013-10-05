@@ -2,6 +2,7 @@
 #include "adc.h"
 #include "gpio.h"
 #include "countgen.h"
+#include "uafc.h"
 #include "board.h"
 
 #include <stdio.h>
@@ -13,7 +14,7 @@ static struct spi spi1;
 static struct adc adc1;
 static struct gpio gpio0;
 static struct countgen cg0;
-static void (*uafc_tick)() = NULL;
+static uafc_tick_callback uafc_tick = NULL;
 
 void 
 set_bar(unsigned int val) {
@@ -67,7 +68,7 @@ setuptimer() {
 }
 
 
-void board_init(void (*tick)()) {
+void board_init(uafc_tick_callback tick) {
   int pin;
 
   printf("board_init() enter\r\n");

@@ -15,6 +15,8 @@ struct calculated_values {
   double load;
 };
 
+typedef void (*uafc_tick_callback)();
+
 
 struct sensors * get_sensors();
 struct calculated_values * get_calculated_values();
