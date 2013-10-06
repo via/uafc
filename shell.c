@@ -5,11 +5,18 @@
 #include "uafc.h"
 #include "tables.h"
 
+static void
+showprompt() {
+  printf("uafc> ");
+}
 
 void 
 shell_init(struct shell *s) {
   s->bufpos = 0;
   s->state = SHELLSTATE_PROMPT;
+  s->runnable = 0;
+  
+  showprompt();
 }
 
 void
@@ -66,6 +73,7 @@ void shell_run(struct shell *s)  {
      break;
     }
     s->runnable = 0;
+    showprompt();
     break;
   case SHELLSTATE_TABLE_READ:
     /* Write this line to fuel table */

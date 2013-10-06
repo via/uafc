@@ -15,5 +15,9 @@ struct shell {
   int runnable;
 };
 
+void shell_init(struct shell *);
+void shell_writebyte(struct shell *, unsigned char b);
+void shell_run(struct shell *s);
+
 #endif
 

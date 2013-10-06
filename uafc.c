@@ -5,6 +5,7 @@
 
 #include "uafc.h"
 #include "history.h"
+#include "shell.h"
 
 #include "board.h"
 
@@ -44,11 +45,14 @@ static void tick() {
 
 int
 main(void) {
-  printf("main() enter\r\n");
+  struct shell shell;
 
+  printf("main() enter\r\n");
+  shell_init(&shell);
   board_init(tick);
 
   while (1) {
+    shell_run(&shell);
   }
 
   return 0;
