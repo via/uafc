@@ -49,7 +49,7 @@ double
 get_o2() {
   int raw = adc_acquire(&adc1, 1);
   double afr = raw / 4096.0;
-  return 7.35 + (afr / 5.0) * (22.35 - 7.35);
+  return 7.35 + (afr * (22.35 - 7.35));
 }
 
 static void 

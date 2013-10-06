@@ -31,7 +31,6 @@ void shell_run(struct shell *s)  {
   case SHELLSTATE_PROMPT:
     showprompt();
     scanf("%s", cmd);
-    printf("recvd %s\r\n", cmd);
 
     switch (cmd[0]) {
     case 'i':
@@ -57,11 +56,11 @@ void shell_run(struct shell *s)  {
     case '?':
       printf("uafc 0.0\r\n");
       printf(" i\tDump current sensors to uart\r\n");
-      printf("d\tDump sensor history to uart\r\n");
-      printf("p\tDump fuel table to uart\r\n");
-      printf("r\tRead fuel table from uart\r\n");
-      printf("w\tWrite fuel table to flash memory\r\n");
-      printf("n\tReload fuel table from flash memory\r\n");
+      printf(" d\tDump sensor history to uart\r\n");
+      printf(" p\tDump fuel table to uart\r\n");
+      printf(" r\tRead fuel table from uart\r\n");
+      printf(" w\tWrite fuel table to flash memory\r\n");
+      printf(" n\tReload fuel table from flash memory\r\n");
       printf("\r\n");
       break; 
     default:
