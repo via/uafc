@@ -41,12 +41,14 @@ get_rpm() {
 
 double
 get_throttle() {
-  return adc_acquire(&adc1, 0);
+  int raw = adc_acquire(&adc1, 0);
+  return raw / 4096.0;
 }
 
 double
 get_o2() {
-  double afr = adc_acquire(&adc1, 1);
+  int raw = adc_acquire(&adc1, 1);
+  double afr = raw / 4096.0;
   return 7.35 + (afr / 5.0) * (22.35 - 7.35);
 }
 
