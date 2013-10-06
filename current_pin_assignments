@@ -1,0 +1,15 @@
+Countgen module:
+Pin 0	F15	Pin 13 of aux	KVAFM
+Pin 2	F14     Pin 15 of aux	RPM
+Pin 3	G16     Pin 16 of aux	ECU KVAFM
+Pin 4	G15     Pin 17 of aux
+
+
+ADC module:
+Pin 0		Pin 24 of aux	TPS
+Pin 1		Pin 25 of aux   WBO2
+Pin 2           Pin 21 of aux	MAP?
+
+UART:
+TX		GPIO_01	(Pin 2 of gpio0)
+RX		GPIO_00	(Pin 4 of gpio0)
