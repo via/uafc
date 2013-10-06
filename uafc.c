@@ -48,8 +48,8 @@ main(void) {
   struct shell shell;
 
   printf("main() enter\r\n");
-  shell_init(&shell);
   board_init(tick);
+  shell_init(&shell);
 
   while (1) {
     shell_run(&shell);

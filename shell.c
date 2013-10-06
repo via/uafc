@@ -8,6 +8,7 @@
 static void
 showprompt() {
   printf("uafc> ");
+  fflush(stdout);
 }
 
 void 
