@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "shell.h"
 #include "uafc.h"
+#include "shell.h"
+#include "history.h"
 #include "tables.h"
 
 static void
@@ -13,49 +14,32 @@ showprompt() {
 
 void 
 shell_init(struct shell *s) {
-  s->bufpos = 0;
   s->state = SHELLSTATE_PROMPT;
-  s->runnable = 0;
-  
-  showprompt();
 }
 
-void
-shell_writebyte(struct shell *s, unsigned char b) {
-  s->typebuf[s->bufpos] = b;
-  if (s->bufpos == TYPEBUFSIZE - 1) {
-    /* buffer fule... don't increment, set error condition */
-  } else {
-    s->bufpos++;
-  }
-
-  if (b == '\n')
-    s->runnable = 1;
-
+void shell_dump_sensors(struct sensors *s) {
+  printf("RPM: %d\tAFM: %d\tTPS: %f\tAFR: %f\r\n",
+    s->rpm, s->afm, s->throttle, s->afr);
 }
-
 
 void shell_run(struct shell *s)  {
 
-  char buf[TYPEBUFSIZE];
+  char cmd[128];
   struct sensors *i;
 
-  if (!s->runnable) 
-    return;
-  
   switch (s->state) {
   case SHELLSTATE_PROMPT:
-    memcpy(s->typebuf, buf, TYPEBUFSIZE);
-    s->bufpos = 0;
+    showprompt();
+    scanf("%s", cmd);
+    printf("recvd %s\r\n", cmd);
 
-    switch (buf[0]) {
+    switch (cmd[0]) {
     case 'i':
       i = get_sensors();
-      printf("RPM: %d\tAFM: %d\tTPS: %f\tAFR: %f",
-        i->rpm, i->afm, i->throttle, i->afr);
+      shell_dump_sensors(i);
       break;
     case 'd':
-      /* Placeholder to dump recorded history */
+      history_dump();
       break;
     case 'p':
       /* Placeholder to dump fuel table */
@@ -70,11 +54,19 @@ void shell_run(struct shell *s)  {
     case 'n':
       /* Placeholder to reload fuel table from flash */
       break;
+    case '?':
+      printf("uafc 0.0\r\n");
+      printf(" i\tDump current sensors to uart\r\n");
+      printf("d\tDump sensor history to uart\r\n");
+      printf("p\tDump fuel table to uart\r\n");
+      printf("r\tRead fuel table from uart\r\n");
+      printf("w\tWrite fuel table to flash memory\r\n");
+      printf("n\tReload fuel table from flash memory\r\n");
+      printf("\r\n");
+      break; 
     default:
      break;
     }
-    s->runnable = 0;
-    showprompt();
     break;
   case SHELLSTATE_TABLE_READ:
     /* Write this line to fuel table */

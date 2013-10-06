@@ -9,15 +9,13 @@ typedef enum {
 } shellstate;
 
 struct shell {
-  char typebuf[TYPEBUFSIZE];
-  unsigned short bufpos;
   shellstate state;
-  int runnable;
 };
 
 void shell_init(struct shell *);
 void shell_writebyte(struct shell *, unsigned char b);
 void shell_run(struct shell *s);
+void shell_dump_sensors(struct sensors *);
 
 #endif
 
